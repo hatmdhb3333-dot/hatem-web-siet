@@ -1,0 +1,394 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hatem Website | شبكة متحركة</title>
+
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            flex-direction: column;
+            font-family: 'Segoe UI', 'Poppins', Arial, sans-serif;
+            background: radial-gradient(circle at 20% 30%, #0a0f1f, #03060e);
+            color: white;
+            position: relative;
+            overflow: hidden;
+            cursor: default;
+        }
+
+        /* ========== شبكة متحركة 3D ========== */
+        .grid-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 0;
+            perspective: 800px;
+            overflow: hidden;
+        }
+
+        .animated-grid {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(rgba(0, 247, 255, 0.15) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(0, 247, 255, 0.15) 1px, transparent 1px);
+            background-size: 50px 50px;
+            transform: rotateX(45deg) rotateZ(45deg);
+            animation: moveGrid 20s linear infinite;
+        }
+
+        @keyframes moveGrid {
+            0% {
+                transform: rotateX(45deg) rotateZ(45deg) translateY(0px);
+            }
+            100% {
+                transform: rotateX(45deg) rotateZ(45deg) translateY(50px);
+            }
+        }
+
+        /* طبقة ثانية من الشبكة - تأثير عمق */
+        .animated-grid-second {
+            position: absolute;
+            width: 200%;
+            height: 200%;
+            top: -50%;
+            left: -50%;
+            background-image: 
+                linear-gradient(rgba(255, 0, 212, 0.08) 2px, transparent 2px),
+                linear-gradient(90deg, rgba(0, 255, 255, 0.08) 2px, transparent 2px);
+            background-size: 80px 80px;
+            transform: rotateX(35deg) rotateZ(30deg);
+            animation: moveGridReverse 25s linear infinite;
+            opacity: 0.6;
+        }
+
+        @keyframes moveGridReverse {
+            0% {
+                transform: rotateX(35deg) rotateZ(30deg) translateY(0px) translateX(0px);
+            }
+            100% {
+                transform: rotateX(35deg) rotateZ(30deg) translateY(-80px) translateX(80px);
+            }
+        }
+
+        /* نقاط متحركة إضافية */
+        .dots-grid {
+            position: absolute;
+            width: 100%;
+            height: 100%;
+            background-image: radial-gradient(circle, rgba(0, 247, 255, 0.4) 1px, transparent 1px);
+            background-size: 40px 40px;
+            animation: pulseDots 4s ease-in-out infinite;
+        }
+
+        @keyframes pulseDots {
+            0%, 100% {
+                opacity: 0.3;
+                background-size: 40px 40px;
+            }
+            50% {
+                opacity: 0.8;
+                background-size: 45px 45px;
+            }
+        }
+
+        /* ========== المحتوى الرئيسي ========== */
+        .content {
+            position: relative;
+            z-index: 10;
+            text-align: center;
+            animation: fadeInUp 1.2s cubic-bezier(0.2, 0.9, 0.4, 1.1);
+        }
+
+        h1 {
+            font-size: 3.8rem;
+            background: linear-gradient(135deg, #00f7ff, #ff00e6, #00f7ff);
+            background-size: 200% auto;
+            -webkit-background-clip: text;
+            background-clip: text;
+            color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: 2px;
+            animation: gradientShift 4s linear infinite, glowPulse 2s ease-in-out infinite;
+            text-shadow: 0 0 30px rgba(0, 247, 255, 0.5);
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        @keyframes glowPulse {
+            0%, 100% {
+                text-shadow: 0 0 20px rgba(0, 247, 255, 0.3);
+            }
+            50% {
+                text-shadow: 0 0 40px rgba(0, 247, 255, 0.8), 0 0 20px rgba(255, 0, 230, 0.5);
+            }
+        }
+
+        .image-wrapper {
+            position: relative;
+            margin-top: 20px;
+            display: inline-block;
+        }
+
+        .image-box {
+            padding: 5px;
+            border-radius: 35px;
+            background: linear-gradient(135deg, #00f7ff, #ff00e6, #00f7ff);
+            background-size: 200% 200%;
+            animation: borderRotate 3s linear infinite, float 4s ease-in-out infinite;
+            box-shadow: 0 0 50px rgba(0, 247, 255, 0.4);
+        }
+
+        @keyframes borderRotate {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        img {
+            width: 280px;
+            height: auto;
+            border-radius: 30px;
+            display: block;
+            transition: transform 0.4s ease, filter 0.3s ease;
+            filter: brightness(1.05) contrast(1.1);
+        }
+
+        .image-box:hover {
+            transform: scale(1.02);
+            box-shadow: 0 0 70px rgba(0, 247, 255, 0.7);
+        }
+
+        img:hover {
+            transform: scale(1.02);
+            filter: brightness(1.1) contrast(1.15);
+        }
+
+        /* كارد معلومات إضافي */
+        .info-card {
+            margin-top: 40px;
+            background: rgba(10, 20, 40, 0.6);
+            backdrop-filter: blur(10px);
+            padding: 15px 30px;
+            border-radius: 50px;
+            border: 1px solid rgba(0, 247, 255, 0.3);
+            font-size: 1rem;
+            letter-spacing: 1px;
+            animation: fadeInUp 1.4s ease-out;
+            transition: all 0.3s;
+        }
+
+        .info-card p {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 500;
+        }
+
+        .glowing-text {
+            color: #00f7ff;
+            animation: textPulse 1.5s ease-in-out infinite;
+        }
+
+        @keyframes textPulse {
+            0%, 100% { opacity: 0.7; text-shadow: 0 0 5px #00f7ff; }
+            50% { opacity: 1; text-shadow: 0 0 15px #00f7ff; }
+        }
+
+        /* جزيئات متحركة خلفية */
+        .particles {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        .particle {
+            position: absolute;
+            background: radial-gradient(circle, #00f7ff, transparent);
+            border-radius: 50%;
+            opacity: 0.4;
+            animation: floatParticle 8s infinite linear;
+        }
+
+        @keyframes floatParticle {
+            0% {
+                transform: translateY(100vh) translateX(0) rotate(0deg);
+                opacity: 0;
+            }
+            10% {
+                opacity: 0.5;
+            }
+            90% {
+                opacity: 0.5;
+            }
+            100% {
+                transform: translateY(-20vh) translateX(100px) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* ظهور العناصر */
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        @keyframes float {
+            0% { transform: translateY(0px); }
+            50% { transform: translateY(-12px); }
+            100% { transform: translateY(0px); }
+        }
+
+        /* تأثير زجاجي للخلفية */
+        .glass-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: radial-gradient(circle at center, rgba(0,0,0,0.2) 0%, rgba(0,0,0,0.6) 100%);
+            z-index: 0;
+            pointer-events: none;
+        }
+
+        /* استجابة للجوال */
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 2rem;
+            }
+            img {
+                width: 200px;
+            }
+            .info-card {
+                font-size: 0.8rem;
+                padding: 10px 20px;
+            }
+            .animated-grid {
+                background-size: 30px 30px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- شبكات متحركة متعددة الطبقات -->
+    <div class="grid-container">
+        <div class="animated-grid"></div>
+        <div class="animated-grid-second"></div>
+        <div class="dots-grid"></div>
+    </div>
+
+    <!-- جزيئات خلفية عشوائية -->
+    <div class="particles" id="particles"></div>
+    
+    <div class="glass-overlay"></div>
+
+    <div class="content">
+        <h1>✨ WELCOME TO HATEM Web site ✨</h1>
+        
+        <div class="image-wrapper">
+            <div class="image-box">
+                <img src="myphoto.jpg" alt="Hatem Profile">
+            </div>
+        </div>
+
+        <div class="info-card">
+            <p>
+                <span class="glowing-text">⚡ HATEM</span> 
+                <span>•</span> 
+                <span>🚀 CREATIVE DEVELOPER</span>
+                <span>•</span>
+                <span>💫 3D GRID EFFECT</span>
+            </p>
+        </div>
+    </div>
+
+    <script>
+        // إنشاء جزيئات متحركة ديناميكية
+        function createParticles() {
+            const particlesContainer = document.getElementById('particles');
+            const particleCount = 60;
+            
+            for (let i = 0; i < particleCount; i++) {
+                const particle = document.createElement('div');
+                particle.classList.add('particle');
+                
+                // حجم عشوائي
+                const size = Math.random() * 4 + 2;
+                particle.style.width = `${size}px`;
+                particle.style.height = `${size}px`;
+                
+                // موقع عشوائي أفقي
+                const leftPos = Math.random() * 100;
+                particle.style.left = `${leftPos}%`;
+                
+                // مدة الحركة العشوائية
+                const duration = Math.random() * 10 + 6;
+                particle.style.animationDuration = `${duration}s`;
+                
+                // تأخير عشوائي
+                const delay = Math.random() * 5;
+                particle.style.animationDelay = `${delay}s`;
+                
+                // لون متغير
+                const hue = Math.random() * 60 + 180; // أزرق / سماوي
+                particle.style.background = `radial-gradient(circle, rgba(${100 + Math.random() * 155}, ${200 + Math.random() * 55}, 255, 0.6), transparent)`;
+                
+                particlesContainer.appendChild(particle);
+            }
+        }
+        
+        // إضافة تأثير تتبع الماوس على الشبكة (اختياري)
+        document.addEventListener('mousemove', (e) => {
+            const grids = document.querySelectorAll('.animated-grid, .animated-grid-second');
+            const x = (e.clientX / window.innerWidth) * 20;
+            const y = (e.clientY / window.innerHeight) * 20;
+            
+            grids.forEach((grid, index) => {
+                const moveX = index === 0 ? x * 0.5 : x * 0.3;
+                const moveY = index === 0 ? y * 0.5 : y * 0.3;
+                grid.style.transform = `rotateX(${45 + (index === 0 ? moveY * 0.1 : 35 + moveY * 0.05)}deg) rotateZ(${45 + (index === 0 ? moveX * 0.1 : 30 + moveX * 0.05)}deg) translateY(${moveY * 0.5}px)`;
+            });
+        });
+        
+        // تشغيل الجزيئات
+        createParticles();
+        
+        // إعادة إنشاء الجزيئات عند تغيير حجم الشاشة (اختياري)
+        window.addEventListener('resize', () => {
+            const particlesContainer = document.getElementById('particles');
+            particlesContainer.innerHTML = '';
+            createParticles();
+        });
+    </script>
+</body>
+</html>
